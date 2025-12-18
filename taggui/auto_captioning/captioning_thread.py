@@ -112,6 +112,9 @@ class CaptioningThread(QThread):
                 print(f'Skipping {image.path.name} because its file format is '
                       'not supported or it is a corrupted image.')
                 continue
+            except BaseException as error:
+                print(f'Skipping {image.path.name} because Unexpected error:'.format(error))
+                continue
             caption, console_output_caption = model.generate_caption(
                 model_inputs, image_prompt)
             tags = add_caption_to_tags(image.tags, caption, caption_position)
